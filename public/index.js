@@ -29,13 +29,21 @@ var handlePlayButtonClick = function(){
   submitButton.onclick = function() {
     var input = document.querySelector('input');
     var result = document.querySelector('#answer');
-    if (input.value === countryInPlay.capital) {
-      result.innerText = "You are amazing"
-    } else {
-      result.innerText = "WRONG"
+    if (input.value > countryInPlay.population - 1000 && input.value < countryInPlay.population + 1000) {
+      result.innerText = "You are within 1000 of the correct answer! One point!"
+    } 
+    else if (input.value > countryInPlay.population - 5000 && input.value < countryInPlay.population + 5000) {
+      result.innerText = "You are within 5000 of the correct answer! Try again!"
+    } 
+    else {
+      result.innerText = "Wrong."
     }
     input.value ="";
   }
+
+  var container = document.getElementById('map');
+  var center = { lat: countryInPlay.latlng[0], lng: countryInPlay.latlng[1] };
+  var map = new Map(container, center, 4);
 
 }
 
@@ -43,10 +51,12 @@ var handlePlayButtonClick = function(){
 
 
 var app = function(){
-  var url = "https://restcountries.eu/rest/v1";
+  var url = "http://localhost:5000";
   console.log("before request");
   makeRequest(url, requestComplete);
   console.log("after request");
+
+
   var playButton = document.querySelector('#play');
   playButton.onclick = handlePlayButtonClick;
 }
