@@ -29,8 +29,10 @@ var handlePlayButtonClick = function(){
   submitButton.onclick = function() {
     var input = document.querySelector('input');
     var result = document.querySelector('#answer');
+    var guess = document.querySelector('#guess');
+    guess.innerText = "You guessed " + input.value;
     if (input.value > countryInPlay.population - 5000 && input.value < countryInPlay.population + 5000) {
-      result.innerText = "You are within 5000 of the correct answer! One point!"
+      result.innerText = "Good enough, the population is " + countryInPlay.population.toLocaleString()
     } 
     else if (input.value > countryInPlay.population - 500000 && input.value < countryInPlay.population + 500000) {
       result.innerText = "You are within 500000 of the correct answer! Try again!"
@@ -50,7 +52,7 @@ var handlePlayButtonClick = function(){
   map.addMarker(center);
   var lower = countryInPlay.population - 1000000;
   var upper = countryInPlay.population + 1000000;
-  var hint = "Hint! It's between " + lower + " and " + upper;
+  var hint = "Hint! It's between " + lower.toLocaleString() + " and " + upper.toLocaleString();
   var infowindow = new InfoWindow(hint, map.marker.marker);
   console.log("map marker", map.marker)
   map.marker.marker.addListener('click', function() {
