@@ -14,15 +14,32 @@ var makeRequest = function(url, callback){
   request.send();
 }
 
-var getCountryName = function(){
+var getCountry = function(){
   var country = countries[Math.floor(Math.random() * countries.length) + 1];
-  return country.name;
+  return country;
 }
 
+
 var handlePlayButtonClick = function(){
-  var country = document.querySelector('span');
-  country.innerText = getCountryName();
+  var countrySpan = document.querySelector('span');
+  var countryInPlay = getCountry();
+  countrySpan.innerText = countryInPlay.name;
+
+  var submitButton = document.querySelector('#submit');
+  submitButton.onclick = function() {
+    var input = document.querySelector('input');
+    var result = document.querySelector('#answer');
+    if (input.value === countryInPlay.capital) {
+      result.innerText = "You are amazing"
+    } else {
+      result.innerText = "WRONG"
+    }
+    input.value ="";
+  }
+
 }
+
+
 
 
 var app = function(){
@@ -32,7 +49,6 @@ var app = function(){
   console.log("after request");
   var playButton = document.querySelector('#play');
   playButton.onclick = handlePlayButtonClick;
-
 }
 
 
