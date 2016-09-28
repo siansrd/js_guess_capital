@@ -29,11 +29,14 @@ var handlePlayButtonClick = function(){
   submitButton.onclick = function() {
     var input = document.querySelector('input');
     var result = document.querySelector('#answer');
-    if (input.value > countryInPlay.population - 1000 && input.value < countryInPlay.population + 1000) {
-      result.innerText = "You are within 1000 of the correct answer! One point!"
+    if (input.value > countryInPlay.population - 5000 && input.value < countryInPlay.population + 5000) {
+      result.innerText = "You are within 5000 of the correct answer! One point!"
     } 
-    else if (input.value > countryInPlay.population - 5000 && input.value < countryInPlay.population + 5000) {
-      result.innerText = "You are within 5000 of the correct answer! Try again!"
+    else if (input.value > countryInPlay.population - 500000 && input.value < countryInPlay.population + 500000) {
+      result.innerText = "You are within 500000 of the correct answer! Try again!"
+    } 
+    else if (input.value > countryInPlay.population - 1000000 && input.value < countryInPlay.population + 1000000) {
+      result.innerText = "You are within 1000000 of the correct answer! Try again!"
     } 
     else {
       result.innerText = "Wrong."
@@ -44,6 +47,18 @@ var handlePlayButtonClick = function(){
   var container = document.getElementById('map');
   var center = { lat: countryInPlay.latlng[0], lng: countryInPlay.latlng[1] };
   var map = new Map(container, center, 4);
+  map.addMarker(center);
+  var lower = countryInPlay.population - 1000000;
+  var upper = countryInPlay.population + 1000000;
+  var hint = "Hint! It's between " + lower + " and " + upper;
+  var infowindow = new InfoWindow(hint, map.marker.marker);
+  console.log("map marker", map.marker)
+  map.marker.marker.addListener('click', function() {
+    infowindow.infowindow.open(map, map.marker.marker)
+  })
+  // map.marker.onclick = hint;
+  console.log(map);
+
 
 }
 
